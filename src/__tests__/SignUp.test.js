@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import SignUp from '../components/SignUp';
+import SignUp from '../components/Auth/SignUp';
 
 import { BrowserRouter } from 'react-router-dom';
 

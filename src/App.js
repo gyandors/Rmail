@@ -3,18 +3,22 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  Navigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
 
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<h1>Welcome</h1>} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<h1>Login Page</h1>} />
+        <Route path="/login" element={<LoginPage />} />
       </>
     )
   );
