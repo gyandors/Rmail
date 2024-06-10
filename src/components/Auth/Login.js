@@ -6,7 +6,7 @@ export default function Login() {
   return (
     <div>
       <div className="mt-12 w-11/12 m-auto sm:w-96">
-        <h1 className="font-bold text-2xl text-center">Login</h1>
+        <h1 className="font-bold text-2xl text-center">Login to Rmail</h1>
       </div>
 
       <div className="mt-12 w-11/12 m-auto sm:w-96">

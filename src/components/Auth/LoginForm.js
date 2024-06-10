@@ -1,6 +1,10 @@
-import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { onLogin } from '../../slices/authSlice';
+import { toggleSpinner } from '../../slices/uiSlice';
 
 import Spinner from '../UI/Spinner';
 
@@ -8,9 +12,8 @@ export default function LoginForm() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const navigate = useNavigate();
-
-  const [spinner, setSpinner] = useState(false);
+  const spinner = useSelector((state) => state.uiState.spinner);
+  const dispatch = useDispatch();
 
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -24,7 +27,7 @@ export default function LoginForm() {
     }
 
     async function userLogin() {
-      setSpinner(true);
+      dispatch(toggleSpinner(true));
       try {
         const response = await fetch(
           'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBwgAJkZjV9L9mIKI7CySOf8mrvtrZ3rOQ',
@@ -38,16 +41,16 @@ export default function LoginForm() {
           }
         );
         const data = await response.json();
-        console.log(data);
+
         if (response.ok) {
-          navigate('/home');
+          dispatch(onLogin(data));
         } else {
           throw new Error(data.error.message);
         }
       } catch (error) {
         toast.error(error.message);
       }
-      setSpinner(false);
+      dispatch(toggleSpinner(false));
     }
 
     userLogin();
@@ -69,12 +72,20 @@ export default function LoginForm() {
         />
       </div>
       <div className="mb-6">
-        <label
-          className="block font-semibold text-sm text-gray-800 mb-1"
-          htmlFor="password"
-        >
-          Password
-        </label>
+        <div className="flex justify-between items-center">
+          <label
+            className="block font-semibold text-sm text-gray-800 mb-1 flex-grow"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <Link
+            className="text-sm text-violet-700 font-semibold"
+            to="/forgot-password"
+          >
+            Forgot password?
+          </Link>
+        </div>
         <input
           className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-violet-700"
           type="password"

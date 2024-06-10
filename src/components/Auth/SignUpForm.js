@@ -1,6 +1,9 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleSpinner } from '../../slices/uiSlice';
 
 import Spinner from '../UI/Spinner';
 
@@ -11,7 +14,8 @@ export default function SignUpForm() {
 
   const navigate = useNavigate();
 
-  const [spinner, setSpinner] = useState(false);
+  const spinner = useSelector((state) => state.uiState.spinner);
+  const dispatch = useDispatch();
 
   function handleFormSubmit(event) {
     event.preventDefault();
@@ -31,7 +35,7 @@ export default function SignUpForm() {
     }
 
     async function userSignUp() {
-      setSpinner(true);
+      dispatch(toggleSpinner(true));
       try {
         const response = await fetch(
           'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBwgAJkZjV9L9mIKI7CySOf8mrvtrZ3rOQ',
@@ -54,7 +58,7 @@ export default function SignUpForm() {
       } catch (error) {
         toast.error(error.message);
       }
-      setSpinner(false);
+      dispatch(toggleSpinner(false));
     }
 
     userSignUp();

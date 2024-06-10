@@ -6,7 +6,7 @@ export default function SignUp() {
   return (
     <div>
       <div className="mt-12 w-11/12 m-auto sm:w-96">
-        <h1 className="font-bold text-2xl text-center">SignUp</h1>
+        <h1 className="font-bold text-2xl text-center">SignUp with email</h1>
       </div>
       <div className="mt-12 w-11/12 m-auto sm:w-96">
         <SignUpForm />
