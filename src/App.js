@@ -16,6 +16,9 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 import HomePage from './pages/HomePage';
 import ComposePage from './pages/ComposePage';
+import InboxPage from './pages/InboxPage';
+import SentPage from './pages/SentPage';
+import StaredPage from './pages/StaredPage';
 
 export default function App() {
   const isLoggedIn = useSelector((state) => state.authState.isLoggedIn);
@@ -50,6 +53,9 @@ export default function App() {
           path="/home"
           element={isLoggedIn ? <HomePage /> : <Navigate to="/" />}
         >
+          <Route path="inbox" element={<InboxPage />} />
+          <Route path="sent" element={<SentPage />} />
+          <Route path="stared" element={<StaredPage />} />
           <Route path="compose" element={<ComposePage />} />
         </Route>
       </>
@@ -65,6 +71,7 @@ export default function App() {
         transition={Zoom}
         position="top-center"
         draggable="mouse"
+        pauseOnFocusLoss={false}
       />
     </>
   );

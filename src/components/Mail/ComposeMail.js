@@ -27,7 +27,7 @@ export default function ComposeMail() {
 
     async function sendMail() {
       const response = await fetch(
-        'https://mail-box-c1237-default-rtdb.firebaseio.com/mails.json',
+        `https://mail-box-c1237-default-rtdb.firebaseio.com/mails.json`,
         {
           method: 'POST',
           body: JSON.stringify(mailDetails),
@@ -37,6 +37,9 @@ export default function ComposeMail() {
       const data = await response.json();
       console.log(response);
       console.log(data);
+      if (response.ok) {
+        navigate('/home/sent');
+      }
     }
 
     sendMail();

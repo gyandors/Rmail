@@ -9,10 +9,12 @@ const authSlice = createSlice({
   },
   reducers: {
     onLogin(state, action) {
+      console.log(action.payload);
       const idToken = action.payload.idToken;
       const loggedUser = {
         name: action.payload.displayName,
         email: action.payload.email,
+        uniqueId: action.payload.localId,
       };
 
       state.idToken = idToken;
