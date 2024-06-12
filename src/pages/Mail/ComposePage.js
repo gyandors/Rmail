@@ -1,4 +1,4 @@
-import ComposeMail from '../components/Mail/ComposeMail';
+import ComposeMail from '../../components/Mail/ComposeMail';
 
 export default function ComposePage() {
   return <ComposeMail />;

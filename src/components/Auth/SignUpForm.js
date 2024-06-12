@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -48,6 +48,7 @@ export default function SignUpForm() {
             }),
           }
         );
+
         if (response.ok) {
           toast.success('Your account is created successfully. Login here');
           navigate('/login');
@@ -63,6 +64,11 @@ export default function SignUpForm() {
 
     userSignUp();
   }
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-6">
@@ -73,7 +79,7 @@ export default function SignUpForm() {
           Email
         </label>
         <input
-          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-violet-700 autofill:bg-yellow-200"
+          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-blue-700"
           type="email"
           id="email"
           ref={emailRef}
@@ -87,7 +93,7 @@ export default function SignUpForm() {
           Password
         </label>
         <input
-          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-violet-700"
+          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-blue-700"
           type="password"
           id="password"
           ref={passwordRef}
@@ -101,7 +107,7 @@ export default function SignUpForm() {
           Confirm Password
         </label>
         <input
-          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-violet-700"
+          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-blue-700"
           type="password"
           id="confirm-password"
           ref={confirmPasswordRef}
@@ -109,10 +115,10 @@ export default function SignUpForm() {
       </div>
       <div className="mb-6">
         <button
-          className="rounded-md py-2 w-full text-sm text-center font-semibold text-white bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:outline-violet-700 focus:outline-offset-2"
+          className="rounded-md py-2 w-full text-sm text-center font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:outline-blue-700 focus:outline-offset-2"
           type="submit"
         >
-          {spinner ? <Spinner /> : 'SignUp'}
+          {spinner ? <Spinner /> : 'Sign up'}
         </button>
       </div>
     </form>

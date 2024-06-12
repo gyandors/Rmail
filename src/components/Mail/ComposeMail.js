@@ -38,7 +38,7 @@ export default function ComposeMail() {
       console.log(response);
       console.log(data);
       if (response.ok) {
-        navigate('/home/sent');
+        navigate('/mail/sent');
       }
     }
 
@@ -47,9 +47,9 @@ export default function ComposeMail() {
 
   return (
     <div className="w-11/12 m-auto rounded overflow-hidden sm:w-auto sm:mx-2">
-      <div className="p-1 bg-violet-600 text-white">
+      <div className="p-1 bg-blue-600 text-white">
         <span>New Message</span>
-        <button className="float-end mr-2" onClick={() => navigate('/home')}>
+        <button className="float-end mr-2" onClick={() => navigate('/mail')}>
           ✕
         </button>
       </div>
@@ -105,7 +105,7 @@ export default function ComposeMail() {
         <MailEditor onDoneEditing={handleDoneEditing} />
         <div className="p-1">
           <button
-            className="rounded px-2 py-1 font-semibold text-white bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:outline-violet-700 focus:outline-offset-2"
+            className="rounded px-2 py-1 font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:outline-blue-700 focus:outline-offset-2"
             onClick={handleSendEmail}
           >
             Send

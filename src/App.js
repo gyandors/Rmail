@@ -8,17 +8,17 @@ import {
 import { useSelector } from 'react-redux';
 import { Zoom, ToastContainer } from 'react-toastify';
 
-import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './pages/Error/NotFoundPage';
 
-import SignUpPage from './pages/SignUpPage';
-import LoginPage from './pages/LoginPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import SignUpPage from './pages/Auth/SignUpPage';
+import LoginPage from './pages/Auth/LoginPage';
+import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage';
 
-import HomePage from './pages/HomePage';
-import ComposePage from './pages/ComposePage';
-import InboxPage from './pages/InboxPage';
-import SentPage from './pages/SentPage';
-import StaredPage from './pages/StaredPage';
+import RootPage from './pages/RootPage';
+import ComposePage from './pages/Mail/ComposePage';
+import InboxPage from './pages/Mail/InboxPage';
+import SentPage from './pages/Mail/SentPage';
+import StaredPage from './pages/Mail/StaredPage';
 
 export default function App() {
   const isLoggedIn = useSelector((state) => state.authState.isLoggedIn);
@@ -28,15 +28,8 @@ export default function App() {
       <>
         <Route
           path="/"
-          element={
-            isLoggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />
-          }
+          element={<Navigate to="/mail" />}
           errorElement={<NotFoundPage />}
-        />
-
-        <Route
-          path="/signup"
-          element={!isLoggedIn ? <SignUpPage /> : <Navigate to="/" />}
         />
 
         <Route
@@ -45,15 +38,20 @@ export default function App() {
         />
 
         <Route
+          path="/signup"
+          element={!isLoggedIn ? <SignUpPage /> : <Navigate to="/" />}
+        />
+
+        <Route
           path="/forgot-password"
           element={!isLoggedIn ? <ForgotPasswordPage /> : <Navigate to="/" />}
         />
 
         <Route
-          path="/home"
-          element={isLoggedIn ? <HomePage /> : <Navigate to="/" />}
+          path="/mail"
+          element={isLoggedIn ? <RootPage /> : <Navigate to="/login" />}
         >
-          <Route path="inbox" element={<InboxPage />} />
+          <Route index element={<InboxPage />} />
           <Route path="sent" element={<SentPage />} />
           <Route path="stared" element={<StaredPage />} />
           <Route path="compose" element={<ComposePage />} />
@@ -67,10 +65,8 @@ export default function App() {
       <RouterProvider router={router} />
 
       <ToastContainer
-        theme="colored"
         transition={Zoom}
         position="top-center"
-        draggable="mouse"
         pauseOnFocusLoss={false}
       />
     </>

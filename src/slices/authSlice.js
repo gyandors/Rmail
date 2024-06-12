@@ -9,7 +9,6 @@ const authSlice = createSlice({
   },
   reducers: {
     onLogin(state, action) {
-      console.log(action.payload);
       const idToken = action.payload.idToken;
       const loggedUser = {
         name: action.payload.displayName,
@@ -25,7 +24,17 @@ const authSlice = createSlice({
 
       state.isLoggedIn = true;
     },
-    onLogout(state, action) {},
+
+    onLogout(state) {
+      console.log(state);
+      state.idToken = null;
+      localStorage.removeItem('idToken');
+
+      state.loggedUser = null;
+      localStorage.removeItem('loggedUser');
+
+      state.isLoggedIn = false;
+    },
   },
 });
 

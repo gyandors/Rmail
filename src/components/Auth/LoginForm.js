@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -55,6 +55,11 @@ export default function LoginForm() {
 
     userLogin();
   }
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
   return (
     <form onSubmit={handleFormSubmit}>
       <div className="mb-6">
@@ -65,7 +70,7 @@ export default function LoginForm() {
           Email
         </label>
         <input
-          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-violet-700 autofill:bg-yellow-200"
+          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-blue-700 autofill:bg-yellow-200"
           type="email"
           id="email"
           ref={emailRef}
@@ -80,14 +85,14 @@ export default function LoginForm() {
             Password
           </label>
           <Link
-            className="text-sm text-violet-700 font-semibold"
+            className="text-sm font-semibold text-blue-600 hover:text-blue-700"
             to="/forgot-password"
           >
             Forgot password?
           </Link>
         </div>
         <input
-          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-violet-700"
+          className="ring-1 ring-inset ring-gray-300 w-full py-1 px-2 rounded-md shadow-sm focus:outline-blue-700"
           type="password"
           id="password"
           ref={passwordRef}
@@ -95,7 +100,7 @@ export default function LoginForm() {
       </div>
       <div className="mb-6">
         <button
-          className="rounded-md py-2 w-full text-sm text-center font-semibold text-white bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:outline-violet-700 focus:outline-offset-2"
+          className="rounded-md py-2 w-full text-sm text-center font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:outline-blue-700 focus:outline-offset-2"
           type="submit"
         >
           {spinner ? <Spinner /> : 'Login'}

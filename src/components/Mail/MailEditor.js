@@ -27,7 +27,7 @@ console.log(convertFromHTML(html));
 */
 
 export default function MailEditor(props) {
-  const [contentState, setContentState] = useState({ content: '' });
+  const [contentState, setContentState] = useState({ content: {} });
 
   function handleContentStateChange(content) {
     setContentState({ content });

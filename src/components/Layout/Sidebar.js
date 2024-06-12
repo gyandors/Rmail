@@ -2,16 +2,15 @@ import { Link, NavLink } from 'react-router-dom';
 
 export default function Sidebar() {
   return (
-    <div className="hidden sm:block w-64 h-full px-5 py-10 bg-slate-100 fixed">
-      <div>
-        <Link
-          className="border-2 border-violet-600 rounded px-2 py-1 text-lg font-semibold hover:bg-violet-600 hover:text-white active:bg-violet-700 focus:outline-violet-600 focus:outline-offset-2"
-          to="compose"
-        >
-          Compose
-        </Link>
-      </div>
-      <div className="list-none mt-4 py-1 rounded">
+    <div className="hidden sm:block drop-shadow-lg w-64 h-full px-5 py-8 bg-blue-50 fixed top-12">
+      <Link
+        className="border-2 border-blue-600 rounded px-2 py-1 text-lg font-semibold hover:bg-blue-600 hover:text-white active:bg-blue-700 focus:outline-blue-600 focus:outline-offset-2"
+        to="compose"
+      >
+        Compose
+      </Link>
+
+      <ul className="mt-4 py-1 rounded">
         <li className="my-2">
           <NavLink
             className={({
@@ -19,11 +18,12 @@ export default function Sidebar() {
             }) => `block px-2 py-1 rounded-r-2xl border-l-4
               ${
                 isActive
-                  ? 'bg-slate-300 font-semibold border-l-violet-700'
-                  : 'hover:bg-slate-200'
+                  ? 'bg-blue-200 font-semibold border-l-blue-700'
+                  : 'hover:bg-blue-100'
               }
             `}
-            to="inbox"
+            to=""
+            end
           >
             Inbox
           </NavLink>
@@ -35,8 +35,8 @@ export default function Sidebar() {
             }) => `block px-2 py-1 rounded-r-2xl border-l-4
               ${
                 isActive
-                  ? 'bg-slate-300 font-semibold border-l-violet-700'
-                  : 'hover:bg-slate-200'
+                  ? 'bg-blue-200 font-semibold border-l-blue-700'
+                  : 'hover:bg-blue-100'
               }
             `}
             to="sent"
@@ -51,8 +51,8 @@ export default function Sidebar() {
             }) => `block px-2 py-1 rounded-r-2xl border-l-4
               ${
                 isActive
-                  ? 'bg-slate-300 font-semibold border-l-violet-700'
-                  : 'hover:bg-slate-200'
+                  ? 'bg-blue-200 font-semibold border-l-blue-700'
+                  : 'hover:bg-blue-100'
               }
             `}
             to="stared"
@@ -60,7 +60,7 @@ export default function Sidebar() {
             Stared
           </NavLink>
         </li>
-      </div>
+      </ul>
     </div>
   );
 }
