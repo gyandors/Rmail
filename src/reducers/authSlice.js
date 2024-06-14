@@ -26,7 +26,6 @@ const authSlice = createSlice({
     },
 
     onLogout(state) {
-      console.log(state);
       state.idToken = null;
       localStorage.removeItem('idToken');
 

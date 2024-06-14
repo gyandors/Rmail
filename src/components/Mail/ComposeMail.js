@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,38 +7,66 @@ import MailEditor from './MailEditor';
 export default function ComposeMail() {
   const { email } = useSelector((state) => state.authState.loggedUser);
 
+  const [isValid, setIsValid] = useState(true);
+
   const toMailRef = useRef();
   const subjectRef = useRef();
 
   const navigate = useNavigate();
 
-  let mailBody;
+  let content;
   function handleDoneEditing(mailContent) {
-    mailBody = mailContent;
+    content = mailContent.content;
+  }
+
+  function handleToMailChange() {
+    setIsValid(true);
   }
 
   function handleSendEmail() {
+    const enteredToMail = toMailRef.current.value;
+    const enteredSubject = subjectRef.current.value;
+
+    if (!enteredToMail || !enteredSubject) {
+      setIsValid(false);
+      return;
+    }
+    if (!enteredToMail.includes('@')) {
+      setIsValid(false);
+      return;
+    }
+
     const mailDetails = {
       from: email,
-      to: toMailRef.current.value,
-      subject: subjectRef.current.value,
-      body: mailBody,
+      to: enteredToMail,
+      subject: enteredSubject,
+      content: content,
     };
 
     async function sendMail() {
       const response = await fetch(
-        `https://mail-box-c1237-default-rtdb.firebaseio.com/mails.json`,
+        `https://mail-box-c1237-default-rtdb.firebaseio.com/${email.replace(
+          '.',
+          ''
+        )}/sentMails.json`,
         {
           method: 'POST',
           body: JSON.stringify(mailDetails),
         }
       );
 
-      const data = await response.json();
-      console.log(response);
-      console.log(data);
       if (response.ok) {
         navigate('/mail/sent');
+        await fetch(
+          `https://mail-box-c1237-default-rtdb.firebaseio.com/${toMailRef.current.value.replace(
+            '.',
+            ''
+          )}/receivedMails.json`,
+          {
+            method: 'POST',
+            body: JSON.stringify({ ...mailDetails, read: false }),
+          }
+        );
       }
     }
 
@@ -77,9 +105,12 @@ export default function ComposeMail() {
             To:
           </label>
           <input
-            className="flex-1 px-2 focus:outline-none"
+            className={`flex-1 px-2 focus:outline-none ${
+              !isValid ? 'bg-red-200' : ''
+            }`}
             type="email"
             id="email"
+            onChange={handleToMailChange}
             ref={toMailRef}
           />
           <div className="text-slate-400 text-sm">
@@ -96,7 +127,9 @@ export default function ComposeMail() {
             Subject:
           </label>
           <input
-            className="px-2 flex-1 focus:outline-none"
+            className={`flex-1 px-2 focus:outline-none ${
+              !isValid ? 'bg-red-200' : ''
+            }`}
             type="text"
             id="subject"
             ref={subjectRef}
