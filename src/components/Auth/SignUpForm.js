@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleSpinner } from '../../slices/uiSlice';
+import { toggleSpinner } from '../../reducers/uiSlice';
 
 import Spinner from '../UI/Spinner';
 
@@ -17,7 +17,7 @@ export default function SignUpForm() {
   const spinner = useSelector((state) => state.uiState.spinner);
   const dispatch = useDispatch();
 
-  function handleFormSubmit(event) {
+  async function handleFormSubmit(event) {
     event.preventDefault();
 
     const email = emailRef.current.value;
@@ -34,35 +34,31 @@ export default function SignUpForm() {
       return;
     }
 
-    async function userSignUp() {
-      dispatch(toggleSpinner(true));
-      try {
-        const response = await fetch(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBwgAJkZjV9L9mIKI7CySOf8mrvtrZ3rOQ',
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              email: email,
-              password: password,
-              returnSecureToken: true,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          toast.success('Your account is created successfully. Login here');
-          navigate('/login');
-        } else {
-          const data = await response.json();
-          throw new Error(data.error.message);
+    dispatch(toggleSpinner(true));
+    try {
+      const response = await fetch(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBwgAJkZjV9L9mIKI7CySOf8mrvtrZ3rOQ',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            email: email,
+            password: password,
+            returnSecureToken: true,
+          }),
         }
-      } catch (error) {
-        toast.error(error.message);
-      }
-      dispatch(toggleSpinner(false));
-    }
+      );
 
-    userSignUp();
+      if (response.ok) {
+        toast.success('Your account is created successfully. Login here');
+        navigate('/login');
+      } else {
+        const data = await response.json();
+        throw new Error(data.error.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+    dispatch(toggleSpinner(false));
   }
 
   useEffect(() => {

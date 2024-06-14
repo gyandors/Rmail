@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { onLogout } from '../../slices/authSlice';
+import { onLogout } from '../../reducers/authSlice';
 
 import { LogoutIcon } from '../../assets/Icons';
+import profileIcon from '../../assets/profile-icon.jpg';
 
 export default function ProfileOverlay(props) {
   const { email } = useSelector((state) => state.authState.loggedUser);
@@ -17,15 +18,9 @@ export default function ProfileOverlay(props) {
         <h1 className="text-sm font-semibold">{email}</h1>
         <div className="flex flex-col items-center">
           <div>
-            <img
-              className="w-16 rounded-full"
-              src={
-                'https://media.licdn.com/dms/image/D5603AQHp6744V3xB7A/profile-displayphoto-shrink_200_200/0/1696220361749?e=2147483647&v=beta&t=CfzulK37KeKk7hwVO2Vov9BnlVuk7P-OF7drzN5FOcI'
-              }
-              alt=""
-            />
+            <img className="w-16 rounded-full" src={profileIcon} alt="" />
           </div>
-          <h1 className="text-xl">Sachin Gyandor</h1>
+          <h1 className="text-xl">Your Name</h1>
         </div>
         <div>
           <button

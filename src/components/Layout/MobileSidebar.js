@@ -1,8 +1,13 @@
 import { Link, NavLink } from 'react-router-dom';
 
 import { XmarkIcon } from '../../assets/Icons';
+import { navLinkClass } from './Sidebar';
 
-export default function MobileSidebar() {
+export default function MobileSidebar(props) {
+  function hideSideBar() {
+    document.getElementById('hidden').classList.toggle('hidden');
+  }
+
   return (
     <div
       className="hidden sm:hidden drop-shadow-lg w-64 h-full px-5 py-2 bg-blue-50 fixed z-50 animate-slideIn"
@@ -10,11 +15,7 @@ export default function MobileSidebar() {
     >
       <div className="flex justify-between items-center">
         <h1 className="font-semibold text-2xl text-gray-700">Rmail</h1>
-        <button
-          onClick={() => {
-            document.getElementById('hidden').classList.toggle('hidden');
-          }}
-        >
+        <button onClick={hideSideBar}>
           <XmarkIcon />
         </button>
       </div>
@@ -22,69 +23,29 @@ export default function MobileSidebar() {
         <Link
           className="border-2 border-blue-600 rounded px-2 py-1 text-lg font-semibold duration-300 hover:bg-blue-600 hover:text-white active:bg-blue-700 focus:outline-blue-600 focus:outline-offset-2"
           to="compose"
-          onClick={() => {
-            document.getElementById('hidden').classList.toggle('hidden');
-          }}
+          onClick={hideSideBar}
         >
           Compose
         </Link>
 
         <ul className="mt-4 py-1 rounded">
           <li className="my-2">
-            <NavLink
-              className={({
-                isActive,
-              }) => `block px-2 py-1 rounded-r-2xl border-l-4
-              ${
-                isActive
-                  ? 'bg-blue-200 font-semibold border-l-blue-700'
-                  : 'hover:bg-blue-100'
-              }
-            `}
-              to=""
-              end
-              onClick={() => {
-                document.getElementById('hidden').classList.toggle('hidden');
-              }}
-            >
+            <NavLink className={navLinkClass} to="inbox" onClick={hideSideBar}>
               Inbox
+              {props.unreadMails > 0 && (
+                <span className="float-end mr-7 font-bold">
+                  +{props.unreadMails}
+                </span>
+              )}
             </NavLink>
           </li>
           <li className="my-2">
-            <NavLink
-              className={({
-                isActive,
-              }) => `block px-2 py-1 rounded-r-2xl border-l-4
-              ${
-                isActive
-                  ? 'bg-blue-200 font-semibold border-l-blue-700'
-                  : 'hover:bg-blue-100'
-              }
-            `}
-              to="sent"
-              onClick={() => {
-                document.getElementById('hidden').classList.toggle('hidden');
-              }}
-            >
+            <NavLink className={navLinkClass} to="sent" onClick={hideSideBar}>
               Sent
             </NavLink>
           </li>
           <li className="my-2">
-            <NavLink
-              className={({
-                isActive,
-              }) => `block px-2 py-1 rounded-r-2xl border-l-4
-              ${
-                isActive
-                  ? 'bg-blue-200 font-semibold border-l-blue-700'
-                  : 'hover:bg-blue-100'
-              }
-            `}
-              to="stared"
-              onClick={() => {
-                document.getElementById('hidden').classList.toggle('hidden');
-              }}
-            >
+            <NavLink className={navLinkClass} to="stared" onClick={hideSideBar}>
               Stared
             </NavLink>
           </li>

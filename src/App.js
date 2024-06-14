@@ -15,10 +15,12 @@ import LoginPage from './pages/Auth/LoginPage';
 import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage';
 
 import RootPage from './pages/RootPage';
+import EmptyScreen from './pages/EmptyScreen';
 import ComposePage from './pages/Mail/ComposePage';
 import InboxPage from './pages/Mail/InboxPage';
 import SentPage from './pages/Mail/SentPage';
 import StaredPage from './pages/Mail/StaredPage';
+import MailBodyPage from './pages/Mail/MailBodyPage';
 
 export default function App() {
   const isLoggedIn = useSelector((state) => state.authState.isLoggedIn);
@@ -51,10 +53,13 @@ export default function App() {
           path="/mail"
           element={isLoggedIn ? <RootPage /> : <Navigate to="/login" />}
         >
-          <Route index element={<InboxPage />} />
-          <Route path="sent" element={<SentPage />} />
-          <Route path="stared" element={<StaredPage />} />
+          <Route index element={<EmptyScreen />} />
           <Route path="compose" element={<ComposePage />} />
+          <Route path="inbox" element={<InboxPage />} />
+          <Route path="inbox/:mailId" element={<MailBodyPage />} />
+          <Route path="sent" element={<SentPage />} />
+          <Route path="sent/:mailId" element={<MailBodyPage />} />
+          <Route path="stared" element={<StaredPage />} />
         </Route>
       </>
     )
@@ -68,6 +73,8 @@ export default function App() {
         transition={Zoom}
         position="top-center"
         pauseOnFocusLoss={false}
+        hideProgressBar
+        autoClose={2000}
       />
     </>
   );

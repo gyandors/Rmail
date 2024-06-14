@@ -1,7 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import AuthReducer from './slices/authSlice';
-import UiReducer from './slices/uiSlice';
+import AuthReducer from './reducers/authSlice';
+import UiReducer from './reducers/uiSlice';
+import EmailReducer from './reducers/emailSlice';
 
 export const store = configureStore({
-  reducer: { authState: AuthReducer, uiState: UiReducer },
+  reducer: {
+    authState: AuthReducer,
+    uiState: UiReducer,
+    emailState: EmailReducer,
+  },
 });
