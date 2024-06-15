@@ -12,18 +12,51 @@ const emailSlice = createSlice({
   initialState,
   reducers: {
     setSentMails(state, action) {
-      state.sentMails = action.payload;
+      state.sentMails.push(action.payload);
     },
+
     setReceivedMails(state, action) {
       state.receivedMails = action.payload.mailArray;
       state.unreadMails = action.payload.unreadMails;
     },
+
     setStaredMails(state, action) {
       state.staredMails = action.payload;
+    },
+
+    markAsRead(state, action) {
+      const updatedMails = state.receivedMails.map((m) => {
+        if (m.id === action.payload) {
+          m.mail.read = true;
+        }
+        return m;
+      });
+      state.receivedMails = updatedMails;
+      state.unreadMails -= 1;
+    },
+
+    deleteSentMails(state, action) {
+      const updatedMails = state.sentMails.filter(
+        (m) => m.id !== action.payload
+      );
+      state.sentMails = updatedMails;
+    },
+
+    deleteReceivedMails(state, action) {
+      const updatedMails = state.receivedMails.filter(
+        (m) => m.id !== action.payload
+      );
+      state.receivedMails = updatedMails;
     },
   },
 });
 
-export const { setSentMails, setReceivedMails, setStaredMails } =
-  emailSlice.actions;
+export const {
+  setSentMails,
+  setReceivedMails,
+  setStaredMails,
+  markAsRead,
+  deleteSentMails,
+  deleteReceivedMails,
+} = emailSlice.actions;
 export default emailSlice.reducer;

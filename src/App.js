@@ -15,7 +15,6 @@ import LoginPage from './pages/Auth/LoginPage';
 import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage';
 
 import RootPage from './pages/RootPage';
-import EmptyScreen from './pages/EmptyScreen';
 import ComposePage from './pages/Mail/ComposePage';
 import InboxPage from './pages/Mail/InboxPage';
 import SentPage from './pages/Mail/SentPage';
@@ -53,13 +52,13 @@ export default function App() {
           path="/mail"
           element={isLoggedIn ? <RootPage /> : <Navigate to="/login" />}
         >
-          <Route index element={<EmptyScreen />} />
-          <Route path="compose" element={<ComposePage />} />
+          <Route index element={<Navigate to="inbox" />} />
           <Route path="inbox" element={<InboxPage />} />
           <Route path="inbox/:mailId" element={<MailBodyPage />} />
           <Route path="sent" element={<SentPage />} />
           <Route path="sent/:mailId" element={<MailBodyPage />} />
           <Route path="stared" element={<StaredPage />} />
+          <Route path="compose" element={<ComposePage />} />
         </Route>
       </>
     )

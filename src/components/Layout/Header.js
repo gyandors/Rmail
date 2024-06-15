@@ -32,7 +32,7 @@ export default function Header() {
         </div>
 
         <button
-          className="w-8 rounded-full border-2 hover:border-blue-300 focus:outline-blue-400 focus:outline-offset-2"
+          className="w-8 h-8 rounded-full border-2 hover:border-blue-300 focus:outline-blue-400 focus:outline-offset-2"
           onClick={() => setShowProfile(!showProfile)}
         >
           <img className="rounded-full" src={profileIcon} alt="" />

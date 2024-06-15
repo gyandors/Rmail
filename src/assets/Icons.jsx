@@ -1,6 +1,7 @@
-export function MenuBarIcon() {
+export function MenuBarIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
       fill="currentColor"
@@ -11,9 +12,10 @@ export function MenuBarIcon() {
   );
 }
 
-export function XmarkIcon() {
+export function XmarkIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 384 512"
       fill="currentColor"
@@ -24,9 +26,10 @@ export function XmarkIcon() {
   );
 }
 
-export function EditIcon() {
+export function EditIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
       fill="currentColor"
@@ -37,9 +40,10 @@ export function EditIcon() {
   );
 }
 
-export function DeleteIcon() {
+export function DeleteIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
       fill="currentColor"
@@ -50,9 +54,10 @@ export function DeleteIcon() {
   );
 }
 
-export function LogoutIcon() {
+export function LogoutIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
       viewBox="0 -960 960 960"
@@ -63,9 +68,10 @@ export function LogoutIcon() {
   );
 }
 
-export function DarkModeIcon() {
+export function DarkModeIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960"
       fill="black"
@@ -76,9 +82,10 @@ export function DarkModeIcon() {
   );
 }
 
-export function LightModeIcon() {
+export function LightModeIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960"
       fill="white"
@@ -89,9 +96,10 @@ export function LightModeIcon() {
   );
 }
 
-export function BackArrow() {
+export function BackArrow(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960"
       width="20"
@@ -102,9 +110,10 @@ export function BackArrow() {
   );
 }
 
-export function DownloadIcon() {
+export function DownloadIcon(props) {
   return (
     <svg
+      className={props.className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -960 960 960"
       width="30"

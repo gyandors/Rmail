@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { markAsRead } from '../../../reducers/emailSlice';
 
 export default function MailList(props) {
   const { id, mail, label } = props;
 
   const { email } = useSelector((state) => state.authState.loggedUser);
 
+  const dispatch = useDispatch();
+
   async function handleMailClick() {
     if (mail.read === false) {
-      await fetch(
+      const response = await fetch(
         `https://mail-box-c1237-default-rtdb.firebaseio.com/${email.replace(
           '.',
           ''
@@ -18,6 +21,9 @@ export default function MailList(props) {
           body: JSON.stringify({ ...mail, read: true }),
         }
       );
+      if (response.ok) {
+        dispatch(markAsRead(id));
+      }
     }
   }
 

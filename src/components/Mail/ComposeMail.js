@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import MailEditor from './MailEditor';
+import { setSentMails } from '../../reducers/emailSlice';
 
 export default function ComposeMail() {
   const { email } = useSelector((state) => state.authState.loggedUser);
@@ -13,6 +14,7 @@ export default function ComposeMail() {
   const subjectRef = useRef();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let content;
   function handleDoneEditing(mailContent) {
@@ -56,6 +58,8 @@ export default function ComposeMail() {
       );
 
       if (response.ok) {
+        const data = await response.json();
+        dispatch(setSentMails({ id: data.name, mail: mailDetails }));
         navigate('/mail/sent');
         await fetch(
           `https://mail-box-c1237-default-rtdb.firebaseio.com/${toMailRef.current.value.replace(
@@ -69,7 +73,6 @@ export default function ComposeMail() {
         );
       }
     }
-
     sendMail();
   }
 
@@ -77,7 +80,7 @@ export default function ComposeMail() {
     <div className="w-11/12 m-auto rounded overflow-hidden sm:w-auto sm:mx-2">
       <div className="p-1 bg-blue-600 text-white">
         <span>New Message</span>
-        <button className="float-end mr-2" onClick={() => navigate('/mail')}>
+        <button className="float-end mr-2" onClick={() => navigate(-1)}>
           ✕
         </button>
       </div>
