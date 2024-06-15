@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import MailEditor from './MailEditor';
 import { setSentMails } from '../../reducers/emailSlice';
@@ -35,6 +36,10 @@ export default function ComposeMail() {
     }
     if (!enteredToMail.includes('@')) {
       setIsValid(false);
+      return;
+    }
+    if (!content) {
+      toast.warning('Are you forgot to write the content of mail ?');
       return;
     }
 
@@ -88,14 +93,14 @@ export default function ComposeMail() {
         <div className="border-b p-1 flex items-center">
           <label
             className="text-sm font-semibold text-slate-600"
-            htmlFor="subject"
+            htmlFor="from"
           >
             From:
           </label>
           <input
             className="px-2 flex-1 focus:outline-none"
             type="text"
-            id="subject"
+            id="from"
             defaultValue={email}
             readOnly
           />

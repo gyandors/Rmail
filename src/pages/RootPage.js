@@ -13,43 +13,42 @@ export default function RootPage() {
 
   useEffect(() => {
     //Fetching received mails
-    (async function () {
-      dispatch(toggleSpinner(true));
-      const response = await fetch(
-        `https://mail-box-c1237-default-rtdb.firebaseio.com/${email.replace(
-          '.',
-          ''
-        )}/receivedMails.json`
-      );
+    setInterval(() => {
+      (async function () {
+        const response = await fetch(
+          `https://mail-box-c1237-default-rtdb.firebaseio.com/${email.replace(
+            '.',
+            ''
+          )}/receivedMails.json`
+        );
 
-      const data = await response.json();
+        const data = await response.json();
 
-      let unreadMails = 0;
-      const mailArray = [];
-      for (const key in data) {
-        //Firebase won't store the empty arrays and objects.
-        // Re-creating those properties manually, after reading the data back.
-        const content = data[key].content;
-        if (!content.entityMap) content.entityMap = {};
-        content.blocks.map((c) => {
-          if (!c.data) c.data = {};
-          if (!c.entityRanges) c.entityRanges = [];
-          if (!c.inlineStyleRanges) c.inlineStyleRanges = [];
-          return c;
-        });
+        let unreadMails = 0;
+        const mailArray = [];
+        for (const key in data) {
+          //Firebase won't store the empty arrays and objects.
+          // Re-creating those properties manually, after reading the data back.
+          const content = data[key].content;
+          if (!content.entityMap) content.entityMap = {};
+          content.blocks.map((c) => {
+            if (!c.data) c.data = {};
+            if (!c.entityRanges) c.entityRanges = [];
+            if (!c.inlineStyleRanges) c.inlineStyleRanges = [];
+            return c;
+          });
 
-        if (data[key].read === false) unreadMails += 1;
+          if (data[key].read === false) unreadMails += 1;
 
-        //Pushing the updated data
-        mailArray.push({
-          id: key,
-          mail: data[key],
-        });
-      }
-
-      dispatch(setReceivedMails({ mailArray, unreadMails }));
-      dispatch(toggleSpinner(false));
-    })();
+          //Pushing the updated data
+          mailArray.push({
+            id: key,
+            mail: data[key],
+          });
+        }
+        dispatch(setReceivedMails({ mailArray, unreadMails }));
+      })();
+    }, 2000);
 
     //Fetching sent mails
     (async function () {
