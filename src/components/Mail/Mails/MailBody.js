@@ -8,9 +8,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   deleteReceivedMails,
   deleteSentMails,
+  markAsUnread,
 } from '../../../reducers/emailSlice';
 
-import { BackArrow, DeleteIcon } from '../../../assets/Icons';
+import { BackArrow, DeleteIcon, MarkAsUnread } from '../../../assets/Icons';
 
 export default function MailBody() {
   const { mailId } = useParams();
@@ -72,6 +73,24 @@ export default function MailBody() {
     }
   }
 
+  async function handleMarkAsUnread() {
+    if (selectedMail.mail.read === true) {
+      const response = await fetch(
+        `https://mail-box-c1237-default-rtdb.firebaseio.com/${email.replace(
+          '.',
+          ''
+        )}/receivedMails/${mailId}.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({ ...selectedMail.mail, read: false }),
+        }
+      );
+      if (response.ok) {
+        dispatch(markAsUnread(mailId));
+      }
+    }
+  }
+
   return (
     <div className="w-11/12 m-auto rounded overflow-hidden sm:w-auto sm:mx-2">
       <header className="p-1 border-b flex justify-between items-center">
@@ -81,12 +100,22 @@ export default function MailBody() {
         >
           <BackArrow className="w-6" />
         </button>
-        <button
-          className="rounded-full p-3 hover:bg-gray-100 active:bg-gray-200 duration-300"
-          onClick={handleDeleteMail}
-        >
-          <DeleteIcon className="w-4" />
-        </button>
+        <div className="flex items-center">
+          {location.pathname.includes('inbox') && (
+            <button
+              className="rounded-full p-2 hover:bg-gray-100 active:bg-gray-200 duration-300"
+              onClick={handleMarkAsUnread}
+            >
+              <MarkAsUnread className="w-6" />
+            </button>
+          )}
+          <button
+            className="rounded-full p-3 hover:bg-gray-100 active:bg-gray-200 duration-300"
+            onClick={handleDeleteMail}
+          >
+            <DeleteIcon className="w-4" />
+          </button>
+        </div>
       </header>
       <section className="p-3">
         <div className="mb-5 mt-2">

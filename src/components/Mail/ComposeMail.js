@@ -39,7 +39,7 @@ export default function ComposeMail() {
       return;
     }
     if (!content) {
-      toast.warning('Are you forgot to write the content of mail ?');
+      toast.warning('Did you forget to write the content of mail?');
       return;
     }
 

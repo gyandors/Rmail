@@ -35,6 +35,17 @@ const emailSlice = createSlice({
       state.unreadMails -= 1;
     },
 
+    markAsUnread(state, action) {
+      const updatedMails = state.receivedMails.map((m) => {
+        if (m.id === action.payload) {
+          m.mail.read = false;
+        }
+        return m;
+      });
+      state.receivedMails = updatedMails;
+      state.unreadMails += 1;
+    },
+
     deleteSentMails(state, action) {
       const updatedMails = state.sentMails.filter(
         (m) => m.id !== action.payload
@@ -56,6 +67,7 @@ export const {
   setReceivedMails,
   setStaredMails,
   markAsRead,
+  markAsUnread,
   deleteSentMails,
   deleteReceivedMails,
 } = emailSlice.actions;
